@@ -1,0 +1,15 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #6f5060;
+    color: #e7ebc5;
+    font-family: 'Fira Sans', 'sans-serif';
+}
+
+.title-header {
+    font-size: 28px;
+    text-align: center;
+}
+
