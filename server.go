@@ -2,14 +2,12 @@ package main
 
 import (
 	//"fmt"
-	"log"
-	"os"
-	"time"
-	"path/filepath"
 	"html/template"
+	"log"
 	"net/http"
-
-
+	"os"
+	"path/filepath"
+	"time"
 )
 
 var port string = "8000"
@@ -21,12 +19,12 @@ func loggerHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func indexHandler(w http.ResponseWriter, r *http.Request) {
-	loggerHandler(w, r);
+	loggerHandler(w, r)
 
 	// Sets up paths for layout template. filepath.Clean sanitizes User input
 	layout_path := filepath.Join("templates", "layout.html")
 	file_path := filepath.Join("templates", filepath.Clean(r.URL.Path))
-	
+
 	// Returns 404 if template doesnt exist
 	info, err := os.Stat(file_path)
 	if err != nil {
@@ -47,27 +45,24 @@ func indexHandler(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		log.Println(err.Error())
 		http.Error(w, http.StatusText(500), 500)
-		return 
+		return
 	}
-
 
 	// Executes template with error clauses
 	if err := custom_template.ExecuteTemplate(w, "layout", nil); err != nil {
 		log.Println(err.Error())
 		http.Error(w, http.StatusText(500), 500)
-	}	
+	}
 }
 
 func main() {
-	
+
 	// Sets up file root directory
 	file_server := http.FileServer(http.Dir("client/public"))
 	http.Handle("/client/public/", http.StripPrefix("/client/public/", file_server))
-	
+
 	// Index handler servers template
-	http.HandleFunc("/", indexHandler) 
+	http.HandleFunc("/", indexHandler)
 	log.Println("Listening on port:" + port)
-	log.Fatal(http.ListenAndServe(":" + port, nil)) //returns only if an error occurs
+	log.Fatal(http.ListenAndServe(":"+port, nil)) //returns only if an error occurs
 }
-
-

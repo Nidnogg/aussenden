@@ -1,3 +1,4 @@
 #!/bin/sh
-# This shell script kills ports currently
-kill -9 $(lsof -ti :8000) 
+# This shell script kills any process currently using port 8000
+kill -9 $(lsof -ti :8000) || echo "Error: port is currently not in use"
+
