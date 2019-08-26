@@ -22,8 +22,8 @@ func indexHandler(w http.ResponseWriter, r *http.Request) {
 	loggerHandler(w, r)
 
 	// Sets up paths for layout template. filepath.Clean sanitizes User input
-	layout_path := filepath.Join("templates", "layout.html")
-	file_path := filepath.Join("templates", filepath.Clean(r.URL.Path))
+	layout_path := filepath.Join("../templates", "layout.html")
+	file_path := filepath.Join("../templates", filepath.Clean(r.URL.Path))
 
 	// Returns 404 if template doesnt exist
 	info, err := os.Stat(file_path)
@@ -58,7 +58,7 @@ func indexHandler(w http.ResponseWriter, r *http.Request) {
 func main() {
 
 	// Sets up file root directory
-	file_server := http.FileServer(http.Dir("client/public"))
+	file_server := http.FileServer(http.Dir("/client/public"))
 	http.Handle("/client/public/", http.StripPrefix("/client/public/", file_server))
 
 	// Index handler servers template
